@@ -13,34 +13,40 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
         }
 
-        button {
-            font-family: 'Times New Roman', Times, serif;
+        .big-profile-avatar {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #ff9a9e;
         }
 
-        button:disabled {
-            background-color: pink;
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border: 3px solid #ff9a9e;
         }
 
-        button:disabled:hover {
-            background-color: blue;
-            cursor: not-allowed;
-        }
-
-        .question__footer .tags {
-            margin-top: 20px;
+        .all__description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+            margin: 1rem 0;
         }
 
         .question-form {
-        margin-top: 30px;
-        padding: 20px;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            margin-top: 2rem;
         }
 
         .question-form form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 1.5rem;
         }
 
         .question-form label {
@@ -49,31 +55,31 @@
         }
 
         .question-form textarea {
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            font-size: 14px;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(5px);
+            background-color: white;
             resize: vertical;
             min-height: 150px;
+            transition: all 0.3s ease;
         }
 
         .question-form textarea:focus {
-            background-color: rgba(255, 255, 255, 0.9);
             outline: none;
-            border-color: rgba(44, 90, 160, 0.5);
-            box-shadow: 0 0 0 2px rgba(44, 90, 160, 0.2);
+            border-color: #ff9a9e;
+            box-shadow: 0 0 0 3px rgba(255, 154, 158, 0.1);
+            background-color: #fff;
         }
 
         .question-form textarea::placeholder {
-            color: rgba(0, 0, 0, 0.6);
+            color: #6c757d;
         }
 
         .question-form input[type="submit"] {
             align-self: flex-start;
-            padding: 10px 24px;
+            padding: 12px 30px;
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
             color: white;
             border: none;
@@ -88,7 +94,54 @@
         .question-form input[type="submit"]:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
-            background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+        }
+
+        .answers-section {
+            margin-top: 2rem;
+        }
+
+        .answers-section h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #ff9a9e;
+            padding-bottom: 0.5rem;
+        }
+
+        .answer-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1.5rem;
+            transition: transform 0.2s;
+        }
+
+        .answer-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .answer-text {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            display: inline-block;
+        }
+
+        .tag:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
         }
     </style>
 
@@ -97,17 +150,16 @@
 
 <body>
     <header>
-        <span>AskPupkin</span>
+        <span class="logo" onclick="location.href='index.html'">AskPupkin</span>
         <input type="text" class="search" placeholder="Search">
-
-        <button class="ask-button">Ask</button>
+        <button class="ask-button" onclick="location.href='ask.html'">Ask</button>
 
         <div class="profile-wrapper">
 
             <div>
                 <div class="button-wrapper">
-                    <a href="#HERE">log in</a>
-                    <a href="#">register</a>
+                    <a href="login.html">log in</a>
+                    <a href="register.html">register</a>
                 </div>
             </div>
         </div>
@@ -115,7 +167,6 @@
 
     <div class="root">
         <main class="root__main">
-
 
             <section class="root__header">
                 <div class="question-item">
@@ -125,7 +176,7 @@
                     </div>
 
                     <div class="question__content">
-                        <a href="#content" class="question-title">How to build a moon park?</a>
+                        <h1 class="question-title">How to build a moon park?</h1>
                         <div class="all__description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse possimus
                             minima officiis iure? Commodi illo quibusdam voluptates accusantium id deleniti natus nobis
                             explicabo tempore? Porro, assumenda. Rem cumque dignissimos sint.</div>
@@ -133,8 +184,8 @@
                         <div class="question__footer">
                             <span class="tags">
                                 Tags:
-                                <a href="#" class="tag">black-jack</a>
-                                <a href="#" class="tag">bender</a>
+                                <a href="tag_benger.html" class="tag">black-jack</a>
+                                <a href="tag_benger.html" class="tag">bender</a>
                             </span>
                         </div>
                     </div>
@@ -142,60 +193,45 @@
             </section>
 
 
-            <section id="content" class="content">
+            <section class="answers-section">
+                <h2>3 Answers</h2>
 
-                <div class="question-item">
+                <div class="answer-item">
                     <div class="question__likes-and-avatar">
-                        <span>avatar</span>
-                        <input class="likes" type="number" value="3" min="0">
+                        <img src="images/avatar1.jpg" alt="avatar" class="avatar">
+                        <input class="likes" type="number" value="15" min="0">
                     </div>
 
                     <div class="question__content">
-                        <a href="#content" class="question-title">Is it true that Makan is going to the army?</a>
-                        <div class="description">No official statements, announcements, or credible news reports confirm this claim.</div>
-
+                        <div class="answer-text">No official statements, announcements, or credible news reports confirm this claim. The information appears to be circulating on social media without verification from reliable sources.</div>
                         <div class="question__footer">
-                            <a href="#">answer (3)</a>
-
-                            <span>
-                                Tags
-                                <a href="#">black-jack</a>
-                                <a href="#">bender</a>
-                            </span>
+                            <span>answered 2 hours ago by <a href="user.html">Mr. Freeman</a></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="question-item" id="HERE">
+                <div class="answer-item">
                     <div class="question__likes-and-avatar">
-                        <span>avatar</span>
-                        <input class="likes" type="number" value="3" min="0">
+                        <img src="images/avatar2.jpg" alt="avatar" class="avatar">
+                        <input class="likes" type="number" value="8" min="0">
                     </div>
 
                     <div class="question__content">
-                        <a href="#content" class="question-title">How to build a moon park?</a>
-                        <div class="description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse possimus
-                            minima officiis iure? Commodi illo quibusdam voluptates accusantium id deleniti natus nobis
-                            explicabo tempore? Porro, assumenda. Rem cumque dignissimos sint.</div>
-
+                        <div class="answer-text">According to my sources, this is just a rumor. There has been no official confirmation from any reliable news outlets or government sources. The project is still in early planning stages.</div>
                         <div class="question__footer">
-                            <a href="#">answer (3)</a>
-
-                            <span>
-                                Tags
-                                <a href="#">black-jack</a>
-                                <a href="#">bender</a>
-                            </span>
+                            <span>answered 1 hour ago by <a href="user.html">Dr. House</a></span>
                         </div>
                     </div>
                 </div>
             </section>
+
             <section class="question-form">
+                <h3>Your Answer</h3>
                 <form action="/save-new-answer" method="post">
                     <label>
-                        <textarea name="text" rows="10" placeholder="Enter your answer here."></textarea>
+                        <textarea name="text" rows="6" placeholder="Enter your answer here..."></textarea>
                     </label>
-                    <input type="submit" value="Answer">
+                    <input type="submit" value="Post Your Answer">
                 </form>
             </section>
         </main>
@@ -204,33 +240,26 @@
             <section id="popular_tags">
                 <h3>Popular Tags</h3>
                 <div class="popular-tags__links">
-                    <a href="#">perl</a>
-                    <a href="#" style="color: red">python</a>
-                    <a href="#">technopark</a>
-                    <a href="#" style="color: red">mysql</a>
-                    <a href="#">technopark</a>
-                    <a href="#" id="firefox">firefox</a>
+                    <a href="tag_benger.html">perl</a>
+                    <a href="tag_benger.html" style="color: #ff6b6b">python</a>
+                    <a href="tag_benger.html">technopark</a>
+                    <a href="tag_benger.html" style="color: #ff6b6b">mysql</a>
+                    <a href="tag_benger.html">django</a>
+                    <a href="tag_benger.html" style="color: #ffa500">firefox</a>
                 </div>
             </section>
 
             <section id="best_members">
                 <h3>Best Members</h3>
                 <ul class="best-members__links">
-                    <li>
-                        <a href="#">mr freeman</a>
-                    </li>
-
-                    <li>
-                        <a href="#">dr house</a>
-                    </li>
-
-                    <li>
-                        <a href="#">bender</a>
-                    </li>
+                    <li><a href="user.html">mr freeman</a></li>
+                    <li><a href="user.html">dr house</a></li>
+                    <li><a href="user.html">bender</a></li>
+                    <li><a href="user.html">queen victoria</a></li>
+                    <li><a href="user.html">v. pupkin</a></li>
                 </ul>
             </section>
         </aside>
     </div>
 </body>
-
 </html>

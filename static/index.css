@@ -4,7 +4,7 @@ body {
 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f0f0f0;
-    background-image: url('/public/images/3.jpg');
+<!--    background-image: url('/public/images/3.jpg'); -->
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -26,12 +26,12 @@ header span:first-child {
 }
 
 input.search {
-    margin: 0;
-    margin-right: auto;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 300px;
+    margin: auto !important;
+    margin-right: auto !important;
+    padding: 8px 12px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    width: 300px !important;
 }
 
 .profile-wrapper {
@@ -77,9 +77,6 @@ input.search {
     object-fit: cover;
 }
 
-input.search {
-    margin: auto;
-}
 
 header>button.ask-button {
     background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
@@ -122,7 +119,7 @@ header>button.ask-button {
 
 .button-wrapper {
     display: flex;
-    gap: 10px;
+    gap: 1rem;
 }
 
 .button-wrapper a {
@@ -133,7 +130,6 @@ header>button.ask-button {
     border-radius: 25px;
     transition: all 0.3s ease;
     cursor: pointer;
-
     background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
     color: white;
     border: none;
@@ -426,7 +422,6 @@ section.content {
 
 .question-item {
     padding: 8px;
-    border: 2px solid darkgray;
     border-radius: 5px;
     display: flex;
     gap: 16px;
@@ -526,24 +521,35 @@ ul.best-members__links {
     padding: 0;
 }
 
-section.paginator {
-    margin-top: 12px;
-}
 
-section.paginator > * {
-    background-color: white;
-    transition: background-color 1s ease-out;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 4px;
-    cursor: pointer;
-}
+        .paginator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
 
-section.paginator > *:hover {
-    background-color: bisque;
-}
+        .paginator button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
-section.paginator > .no-click {
-    background-color: inherit;
-    cursor: default;
-}
+        .paginator button:not(:disabled):not(.no-click):hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .paginator button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .paginator .no-click {
+            background: #f8f9fa;
+            cursor: default;
+        }
