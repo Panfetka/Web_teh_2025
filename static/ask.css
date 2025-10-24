@@ -1,0 +1,85 @@
+.question-form .form-header h1 {
+    margin-left: 20px !important;
+    font-weight: 300;
+    margin: 0;
+    font-size: 28px;
+}
+
+.question-form span {
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 14px;
+}
+
+form input[type="submit"] {
+    margin-top: 20px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+button {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+button:disabled {
+    background-color: blue;
+}
+
+button:disabled:hover {
+    background-color: blue;
+    cursor: not-allowed;
+}
+
+.content {
+}
+
+.root {
+        display: flex;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    main {
+        flex: 1;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .modal-header {
+        display: flex;
+        gap: 4px;
+        flex-direction: row;
+    }
+
+    .modal-header > button {
+        margin-left: auto;
+    }
+
+    .modal-header:last-child {
+        margin-left:P auto;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form > label {
+        display: flex;
+        flex-direction: column;
+    }

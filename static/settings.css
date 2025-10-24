@@ -1,0 +1,80 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+button:disabled {
+    background-color: pink;
+}
+
+button:disabled:hover {
+    background-color: blue;
+    cursor: not-allowed;
+}
+
+.content {
+}
+
+.current-avatar {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 2px solid rgba(44, 90, 160, 0.3);
+}
+
+.avatar-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.avatar-upload-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar-upload-header > span {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+
+.content form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.content label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.content label span {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 14px;
+}
+
+.content input[type="text"],
+.content input[type="email"] {
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content input[readonly] {
+    background-color: rgba(255, 255, 255, 0.4);
+    color: #666;
+    cursor: not-allowed;
+}
