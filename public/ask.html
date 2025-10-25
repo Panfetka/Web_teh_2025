@@ -7,8 +7,8 @@
     <title>Document</title>
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="/static/index.css">
-    <link rel="stylesheet" href="/static/ask.css">
+    <link rel="stylesheet" href="../static/index.css">
+    <link rel="stylesheet" href="../static/ask.css">
 </head>
 
 
@@ -40,15 +40,15 @@
                 <form action="/save-new-question" method="post">
                     <label>
                         <span>Title</span>
-                        <input type="text" name="title" placeholder="Enter your question title">
+                        <input type="text" name="title" placeholder="Enter your question title" required minlength="10" maxlength="200">
                     </label>
                     <label>
                         <span>Text</span>
-                        <textarea name="text" rows="6" placeholder="Describe your question in detail"></textarea>
+                        <textarea name="text" rows="6" placeholder="Describe your question in detail" required minlength="20"></textarea>
                     </label>
                     <label>
                         <span>Tags</span>
-                        <input type="text" name="tags" placeholder="Enter tags separated by commas">
+                        <input type="text" name="tags" placeholder="Enter tags separated by commas" required pattern="[a-zA-Z0-9, ]+">
                     </label>
 
                     <input type="submit" value="Ask Question">
@@ -61,12 +61,12 @@
             <section id="popular_tags">
                 <h3>Popular Tags</h3>
                 <div class="popular-tags__links">
-                    <a href="tag_benger.html">perl</a>
-                    <a href="tag_benger.html" style="color: red">python</a>
-                    <a href="tag_benger.html">technopark</a>
-                    <a href="tag_benger.html" style="color: red">mysql</a>
-                    <a href="tag_benger.html">django</a>
-                    <a href="tag_benger.html" id="firefox">firefox</a>
+                    <a href="tag_bender.html">perl</a>
+                    <a href="tag_bender.html" style="color: red">python</a>
+                    <a href="tag_bender.html">technopark</a>
+                    <a href="tag_bender.html" style="color: red">mysql</a>
+                    <a href="tag_bender.html">django</a>
+                    <a href="tag_bender.html" id="firefox">firefox</a>
                 </div>
             </section>
 
