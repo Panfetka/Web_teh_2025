@@ -1,0 +1,45 @@
+
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}AskPupkin - Home{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header">
+        <h1>New questions</h1>
+        <a href="{% url 'hot_questions' %}" class="hot-questions">Hot questions</a>
+    </section>
+
+    <section id="content" class="content">
+        {% for question in page_obj %}
+        <div class="question-item" data-id="{{question.id}}">
+            <div class="question__likes-and-avatar">
+                <img src="{% static 'images/' %}{{ question.avatar }}" alt="avatar" class="avatar">
+                <input class="likes" type="number" value="5" min="0">
+            </div>
+
+            <div class="question__content">
+                <a href="{% url 'question_detail' question.id %}" class="question-title">{{ question.text }}</a>
+                <div class="description">{{ question.description }}</div>
+
+                <div class="question__footer">
+                    <a href="{% url 'question_detail' question.id %}#answers">answers ({{ question.answers }})</a>
+
+                    <span class="tags">
+                        Tags
+                        {% for tag in question.tags %}
+                        <a href="{% url 'tag_questions' tag %}" class="tag">{{ tag }}</a>
+                        {% endfor %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+
+    {% include "public/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,176 @@
+<!--{% load static %}-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Settings - AskPupkin</title>-->
+<!--    <link rel="stylesheet" href="{% static 'index.css' %}">-->
+<!--    <link rel="stylesheet" href="{% static 'register.css' %}">-->
+
+
+<!--</head>-->
+
+<!--<body>-->
+
+<!--    <header>-->
+<!--        <span class="logo" onclick="location.href='index.html'">AskPupkin</span>-->
+<!--        <input type="text" class="search" placeholder="Search">-->
+<!--        <button class="ask-button" onclick="location.href='ask.html'">Ask</button>-->
+
+<!--        <div class="profile-wrapper">-->
+<!--            <img src="images/2.jpg" alt="Profile" class="profile-avatar">-->
+<!--            <div>-->
+<!--                <div class="profile-name">Dr. Piper</div>-->
+<!--                <div class="button-wrapper">-->
+<!--                    <a href="settings.html">settings</a>-->
+<!--                    <a href="login.html">log out</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </header>-->
+
+<!--    <div class="root">-->
+<!--        <main class="root__main">-->
+<!--            <section class="root__header">-->
+<!--                <h1>Settings: Dr. Piper</h1>-->
+<!--            </section>-->
+
+<!--            <section id="content" class="content">-->
+<!--                <form action="/save-settings" method="post" enctype="multipart/form-data">-->
+<!--                    <div class="alert alert-error">-->
+<!--                        <strong>Sorry, this email address already registered!</strong>-->
+<!--                    </div>-->
+
+<!--                    <label>-->
+<!--                        <span>Login</span>-->
+<!--                        <input type="text" name="login" value="dr_piper" readonly>-->
+<!--                    </label>-->
+
+<!--                    <label>-->
+<!--                        <span>Email</span>-->
+<!--                        <input type="email" name="email" value="dr.piper@mail.ru" required>-->
+<!--                    </label>-->
+
+<!--                    <label>-->
+<!--                        <span>NickName</span>-->
+<!--                        <input type="text" name="nickname" value="Dr. Piper" required minlength="3" maxlength="50">-->
+<!--                    </label>-->
+
+<!--                    <label>-->
+<!--                        <span>Password</span>-->
+<!--                        <input type="password" name="password" value="**********" required minlength="6">-->
+<!--                    </label>-->
+
+<!--                    <label>-->
+<!--                        <span>Repeat password</span>-->
+<!--                        <input type="password" name="repeat_password" value="**********" required>-->
+<!--                    </label>-->
+
+<!--                    <div class="avatar-upload">-->
+<!--                        <div class="avatar-upload-header">-->
+<!--                            <span>Upload avatar</span>-->
+<!--                            <div class="avatar-preview">-->
+<!--                                <img src="images/4.jpg" alt="Current avatar" class="current-avatar">-->
+<!--                            </div>-->
+<!--                            <div class="file-input-wrapper">-->
+<!--                                <input type="file" name="avatar" id="avatar-upload" accept="image/*">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <input type="submit" value="Register!">-->
+<!--                </form>-->
+<!--            </section>-->
+<!--        </main>-->
+
+<!--        <aside>-->
+<!--            <section id="popular_tags">-->
+<!--                <h3>Popular Tags</h3>-->
+<!--                <div class="popular-tags__links">-->
+<!--                    <a href="tag_bender.html">perl</a>-->
+<!--                    <a href="tag_bender.html" style="color: red">python</a>-->
+<!--                    <a href="tag_bender.html">technopark</a>-->
+<!--                    <a href="tag_bender.html" style="color: red">mysql</a>-->
+<!--                    <a href="tag_bender.html">django</a>-->
+<!--                    <a href="tag_bender.html" id="firefox">firefox</a>-->
+<!--                </div>-->
+<!--            </section>-->
+
+<!--            <section id="best_members">-->
+<!--                <h3>Best Members</h3>-->
+<!--                <ul class="best-members__links">-->
+<!--                    <li><a href="user.html">mr freeman</a></li>-->
+<!--                    <li><a href="user.html">dr house</a></li>-->
+<!--                    <li><a href="user.html">bender</a></li>-->
+<!--                    <li><a href="user.html">queen victoria</a></li>-->
+<!--                    <li><a href="user.html">v. pupkin</a></li>-->
+<!--                </ul>-->
+<!--            </section>-->
+<!--        </aside>-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Settings - AskPupkin{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'settings.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header">
+        <h1>Settings: Dr. Piper</h1>
+    </section>
+
+    <section id="content" class="content">
+        <form action="#" method="post" enctype="multipart/form-data">
+            <div class="alert alert-error">
+                <strong>Sorry, this email address already registered!</strong>
+            </div>
+
+            <label>
+                <span>Login</span>
+                <input type="text" name="login" value="dr_piper" readonly>
+            </label>
+
+            <label>
+                <span>Email</span>
+                <input type="email" name="email" value="dr.piper@mail.ru" required>
+            </label>
+
+            <label>
+                <span>NickName</span>
+                <input type="text" name="nickname" value="Dr. Piper" required minlength="3" maxlength="50">
+            </label>
+
+            <label>
+                <span>Password</span>
+                <input type="password" name="password" value="**********" required minlength="6">
+            </label>
+
+            <label>
+                <span>Repeat password</span>
+                <input type="password" name="repeat_password" value="**********" required>
+            </label>
+
+            <div class="avatar-upload">
+                <div class="avatar-upload-header">
+                    <span>Upload avatar</span>
+                    <div class="avatar-preview">
+                        <img src="{% static 'images/4.jpg' %}" alt="Current avatar" class="current-avatar">
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="avatar" id="avatar-upload" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Register!">
+        </form>
+    </section>
+{% endblock %}
