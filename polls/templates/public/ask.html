@@ -1,7 +1,7 @@
 {% extends "public/base.html" %}
 {% load static %}
 
-{% block title %}Ask Question - AskPupkin{% endblock %}
+{% block title %}Ask Question - {{ block.super }}{% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'ask.css' %}">
@@ -15,13 +15,14 @@
         </div>
 
         <form action="#" method="post">
+            {% csrf_token %}
             <label>
                 <span>Title</span>
-                <input type="text" name="title" placeholder="Enter your question title" required minlength="10" maxlength="200">
+                <input type="text" name="title" placeholder="Enter your question title" required minlength="3" maxlength="200">
             </label>
             <label>
                 <span>Text</span>
-                <textarea name="text" rows="6" placeholder="Describe your question in detail" required minlength="20"></textarea>
+                <textarea name="text" rows="6" placeholder="Describe your question in detail" required minlength="20" class="resizable-textarea"></textarea>
             </label>
             <label>
                 <span>Tags</span>

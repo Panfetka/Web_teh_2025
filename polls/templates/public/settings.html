@@ -1,4 +1,4 @@
-{% extends "public/base.html" %}
+{% extends "public/base_auth.html" %}
 {% load static %}
 
 {% block title %}Settings - AskPupkin{% endblock %}
@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="{% static 'settings.css' %}">
 {% endblock %}
 
-{% block content %}
+{% block auth_content %}
     <section class="root__header">
         <h1>Settings: Dr. Piper</h1>
     </section>
 
     <section id="content" class="content">
         <form action="#" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="alert alert-error">
                 <strong>Sorry, this email address already registered!</strong>
             </div>

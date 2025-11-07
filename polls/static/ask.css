@@ -83,3 +83,17 @@ button:disabled:hover {
         display: flex;
         flex-direction: column;
     }
+
+    .resizable-textarea {
+    resize: vertical;
+    max-height: 300px;
+    min-height: 120px;
+    max-width: 96%;
+    min-width: 96%;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    }

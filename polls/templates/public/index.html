@@ -1,4 +1,3 @@
-
 {% extends "public/base.html" %}
 {% load static %}
 
@@ -19,15 +18,15 @@
         <div class="question-item" data-id="{{question.id}}">
             <div class="question__likes-and-avatar">
                 <img src="{% static 'images/' %}{{ question.avatar }}" alt="avatar" class="avatar">
-                <input class="likes" type="number" value="5" min="0">
+                <input class="likes" type="number" value="{{ question.likes }}" min="0">
             </div>
 
             <div class="question__content">
-                <a href="{% url 'question_detail' question.id %}" class="question-title">{{ question.text }}</a>
+                <a href="{% url 'question_detail' question.id %}" class="question-title">{{ question.title }}</a>
                 <div class="description">{{ question.description }}</div>
 
                 <div class="question__footer">
-                    <a href="{% url 'question_detail' question.id %}#answers">answers ({{ question.answers }})</a>
+                    <a href="{% url 'question_detail' question.id %}#answers">answers ({{ question.answers_count }})</a>
 
                     <span class="tags">
                         Tags
