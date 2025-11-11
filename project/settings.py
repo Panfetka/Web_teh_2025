@@ -14,8 +14,10 @@ from pathlib import Path
 import os
 from configparser import ConfigParser, ExtendedInterpolation
 
+
 config = ConfigParser()
-config.read('.config')
+#config.read('.config')
+config.read('project/prod.conf')
 
 PROJECT_NAME = "vkproject"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions'
 ]
 
 INSTALLED_APPS += [
@@ -90,10 +93,25 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': config.get('database', 'ENGINE'),
+#         'NAME': config.get('database', 'NAME'),
+#         'USER': config.get('database', 'USER'),
+#         'PASSWORD': config.get('database', 'PASSWORD'),
+#         'HOST': config.get('database', 'HOST'),
+#         'PORT': config.get('database', 'PORT'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ask_pupkin_db',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -143,6 +161,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/images/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

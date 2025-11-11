@@ -15,15 +15,31 @@
         <button class="ask-button" onclick="location.href='{% url 'ask' %}'">Ask</button>
 
         <div class="profile-wrapper">
-            <img src="{% static 'images/2.jpg' %}" alt="Profile" class="profile-avatar">
+            {% if current_user_profile and current_user_profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="Profile" class="profile-avatar">
+            {% else %}
+                <img src="{% static 'images/avatar1.jpg' %}" alt="Profile" class="profile-avatar">
+            {% endif %}
 
             <div>
-                <div class="profile-name">Dr. Piper</div>
+        <div class="profile-name">
+            {% if user.is_authenticated %}
+                {{ user.username }}
+            {% else %}
+                Guest
+            {% endif %}
+        </div>
                 <div class="button-wrapper">
-                    <a href="{% url 'settings' %}">settings</a>
-                    <a href="{% url 'login' %}">log in</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'settings' %}">settings</a>
+                        <a href="{% url 'login' %}">log in</a>
+                    {% else %}
+                        <a href="{% url 'login' %}">log in</a>
+                        <a href="{% url 'signup' %}">sign up</a>
+                    {% endif %}
                 </div>
-            </div>
+
+        </div>
         </div>
     </header>
 
@@ -37,5 +53,7 @@
             {% include "public/sidebar.html" %}
         </aside>
     </div>
+<script src="{% static 'likes.js' %}"></script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>

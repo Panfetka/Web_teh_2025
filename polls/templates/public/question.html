@@ -4,6 +4,7 @@
 {% block title %}Question {{ question.id }} - {{ block.super }}{% endblock %}
 
 {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
     <link rel="stylesheet" href="{% static 'question.css' %}">
 {% endblock %}
 
@@ -11,8 +12,17 @@
     <section class="root__header">
         <div class="question-item">
             <div class="question__likes-and-avatar">
-                <img src="{% static 'images/' %}{{ question.avatar }}" alt="Profile" class="big-profile-avatar">
-                <input class="likes" type="number" value="{{ question.likes }}" min="0">
+                {% if question.author.profile.avatar %}
+                    <img src="{{ question.author.profile.avatar.url }}" alt="Profile" class="big-profile-avatar">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.jpg' %}" alt="Profile" class="big-profile-avatar">
+                {% endif %}
+                <div class="likes-widget">
+                    <button class="like-btn" data-type="question" data-id="{{ question.id }}">
+                        <span class="like-icon">❤️</span>
+                        <span class="likes-count">{{ question.likes_count }}</span>
+                    </button>
+                </div>
             </div>
 
             <div class="question__content">
@@ -22,24 +32,33 @@
                 <div class="question__footer">
                     <span class="tags">
                         Tags:
-                        {% for tag in question.tags %}
-                        <a href="{% url 'tag_questions' tag %}" class="tag">{{ tag }}</a>
+                        {% for tag in question.tags.all %}
+                        <a href="{% url 'tag_questions' tag %}" class="tag">{{ tag.name }}</a>
                         {% endfor %}
                     </span>
-                    <span class="author">by {{ question.author }}</span>
+                    <span class="author">by {{ question.author.username }}</span>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="answers-section">
-        <h2>{{ answers|length }} Answers</h2>
+        <h2>{{ answers.count }} Answers</h2>
 
         {% for answer in answers %}
         <div class="answer-item">
             <div class="question__likes-and-avatar">
-                <img src="{% static 'images/avatar' %}{{ forloop.counter }}.jpg" alt="avatar" class="avatar">
-                <input class="likes" type="number" value="{{ answer.likes }}" min="0">
+                {% if answer.author.profile.avatar %}
+                    <img src="{{ answer.author.profile.avatar.url }}" alt="avatar" class="avatar">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.jpg' %}" alt="avatar" class="avatar">
+                {% endif %}
+                <div class="likes-widget">
+                    <button class="like-btn" data-type="answer" data-id="{{ answer.id }}">
+                        <span class="like-icon">❤️</span>
+                        <span class="likes-count">{{ answer.likes_count }}</span>
+                    </button>
+                </div>
             </div>
 
             <div class="question__content">
@@ -48,7 +67,7 @@
                 {% endif %}
                 <div class="answer-text">{{ answer.text }}</div>
                 <div class="question__footer">
-                    <span>answered by <a href="#">{{ answer.author }}</a></span>
+                    <span>answered by <a href="#">{{ answer.author.username }}</a></span>
                 </div>
             </div>
         </div>

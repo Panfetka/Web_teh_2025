@@ -17,8 +17,17 @@
         {% for question in page_obj %}
         <div class="question-item" data-id="{{question.id}}">
             <div class="question__likes-and-avatar">
-                <img src="{% static 'images/' %}{{ question.avatar }}" alt="avatar" class="avatar">
-                <input class="likes" type="number" value="{{ question.likes }}" min="0">
+                {% if question.author.profile.avatar %}
+                    <img src="{{ question.author.profile.avatar.url }}" alt="avatar" class="avatar">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.jpg' %}" alt="avatar" class="avatar">
+                {% endif %}
+                <div class="likes-widget">
+                    <button class="like-btn" data-type="question" data-id="{{ question.id }}">
+                        <span class="like-icon">❤️</span>
+                        <span class="likes-count">{{ question.likes_count }}</span>
+                    </button>
+                </div>
             </div>
 
             <div class="question__content">
@@ -30,9 +39,12 @@
 
                     <span class="tags">
                         Tags
-                        {% for tag in question.tags %}
+                        {% for tag in question.tags.all|slice:":2" %}
                         <a href="{% url 'tag_questions' tag %}" class="tag">{{ tag }}</a>
                         {% endfor %}
+                        {% if question.tags.count > 2 %}
+                            <span class="tags-ellipsis">...</span>
+                        {% endif %}
                     </span>
                 </div>
             </div>
