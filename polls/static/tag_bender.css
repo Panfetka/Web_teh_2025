@@ -1,0 +1,131 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.tag__question h1 {
+    color: #333;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #ff9a9e;
+    padding-bottom: 0.5rem;
+}
+
+.tag__question > h1 {
+    margin-left: 20px;
+    font-weight: normal;
+    margin: 0;
+    font-size: 28px;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #ff9a9e;
+    padding-bottom: 0.5rem;
+}
+
+.question-item {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.2s;
+}
+
+.question-item:hover {
+    transform: translateY(-2px);
+}
+
+        .question__likes-and-avatar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 80px;
+        }
+
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #ff9a9e;
+            border-radius: 8px;
+        }
+
+
+        .question__content {
+            flex: 1;
+        }
+
+        .question-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-title:hover {
+            color: #667eea;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .question__footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .question__footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .question__footer a:hover {
+            text-decoration: underline;
+        }
+
+        .tags {
+            color: #666;
+        }
+
+        .tags a {
+            margin-left: 0.5rem;
+            padding: 0.2rem 0.5rem;
+            background: #f0f0f0;
+            border-radius: 3px;
+            color: #333;
+        }
+
+.tags a:hover {
+    background: #667eea;
+    color: white;
+}
+
+.tag__question {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    margin-left: 20px;
+}
+
+.tag__question > h1 {
+    margin-left: 20px;
+    font-weight: normal;
+    margin: 0;
+    font-size: 28px;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #ff9a9e;
+    padding-bottom: 0.5rem;
+}

@@ -1,0 +1,23 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Hot Questions - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header">
+        <h1>Hot questions</h1>
+        <a href="{% url 'index' %}" class="hot-questions">New questions</a>
+    </section>
+
+    <section id="content" class="content">
+        {% for question in page_obj %}
+            {% include "public/question_card.html" with question=question %}
+        {% endfor %}
+    </section>
+
+    {% include "public/pagination.html" %}
+{% endblock %}

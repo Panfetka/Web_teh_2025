@@ -1,0 +1,52 @@
+{% extends "public/base_auth.html" %}
+{% load static %}
+
+{% block title %}Settings - AskPupkin{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'settings.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+    <section class="root__header">
+        <h1>Settings: Dr. Piper</h1>
+    </section>
+
+    <section id="content" class="content">
+        <form action="#" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="alert alert-error">
+                <strong>Sorry, this email address already registered!</strong>
+            </div>
+
+            <div class="form-group">
+                <label for="login">Login</label>
+                <input type="text" id="login" name="login" value="dr_piper" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="dr.piper@mail.ru">
+            </div>
+
+            <div class="form-group">
+                <label for="nickname">NickName</label>
+                <input type="text" id="nickname" name="nickname" value="Dr. Piper">
+            </div>
+
+            <div class="avatar-upload">
+                <div class="avatar-upload-header">
+                    <span>Upload avatar</span>
+                    <div class="avatar-preview">
+                        <img src="{% static 'images/4.jpg' %}" alt="Current avatar" class="current-avatar">
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="avatar" id="avatar-upload" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Save">
+        </form>
+    </section>
+{% endblock %}

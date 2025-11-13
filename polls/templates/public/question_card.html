@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<div class="question-item" data-id="{{ question.id }}">
+    <div class="question__likes-and-avatar">
+        <img src="{% static 'images/' %}{{ question.avatar }}" alt="avatar" class="avatar">
+        <div class="likes-widget">
+            <button class="like-btn" data-type="question" data-id="{{ question.id }}">
+                <span class="like-icon">❤️</span>
+                <span class="likes-count">{{ question.likes }}</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="question__content">
+        <a href="{% url 'question_detail' question.id %}" class="question-title">{{ question.title }}</a>
+        <div class="description">{{ question.description }}</div>
+
+        <div class="question__footer">
+            <div class="answers-count">
+                <span class="answers-icon">💬</span>
+                <a href="{% url 'question_detail' question.id %}#answers">answers ({{ question.answers_count }})</a>
+            </div>
+
+            <span class="tags">
+                Tags:
+                {% for tag in question.tags %}
+                <a href="{% url 'tag_questions' tag %}" class="tag">{{ tag }}</a>
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+</div>
+</html>

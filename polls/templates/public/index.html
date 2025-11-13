@@ -1,0 +1,23 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}AskPupkin - Home{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header">
+        <h1>New questions</h1>
+        <a href="{% url 'hot_questions' %}" class="hot-questions">Hot questions</a>
+    </section>
+
+    <section id="content" class="content">
+        {% for question in page_obj %}
+            {% include "public/question_card.html" with question=question %}
+        {% endfor %}
+    </section>
+
+    {% include "public/pagination.html" %}
+{% endblock %}

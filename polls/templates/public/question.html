@@ -1,0 +1,86 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Question {{ question.id }} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'question.css' %}">
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header" data-id="{{ question.id }}">
+        <div class="question-item">
+            <div class="question__likes-and-avatar">
+                <img src="{% static 'images/' %}{{ question.avatar }}" alt="Profile" class="big-profile-avatar">
+                <div class="likes-widget">
+                <button class="like-btn" data-type="question" data-id="{{ question.id }}">
+                    <span class="like-icon">❤️</span>
+                    <span class="likes-count">{{ question.likes }}</span>
+                </button>
+                </div>
+            </div>
+
+            <div class="question__content">
+                <h1 class="question-title">{{ question.title }}</h1>
+                <div class="all__description">{{ question.description }}</div>
+
+                <div class="question__footer">
+                    <div class="answers-count">
+                    <span class="answers-icon">💬</span>
+                    <span>answers ({{ question.answers_count }})</span>
+                    </div>
+                    <span class="tags">
+                        Tags:
+                        {% for tag in question.tags %}
+                        <a href="{% url 'tag_questions' tag %}" class="tag">{{ tag }}</a>
+                        {% endfor %}
+                    </span>
+                    <span class="author">by {{ question.author }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="answers-section">
+        <h2>{{ answers|length }} Answers</h2>
+
+        {% for answer in page_obj %}
+        <div class="answer-item">
+            <div class="question__likes-and-avatar">
+                <img src="{% static 'images/' %}{{ answer.avatar }}" alt="avatar" class="avatar">
+                <div class="likes-widget">
+                    <button class="like-btn" data-type="answer" data-id="{{ answer.id }}">
+                        <span class="like-icon">❤️</span>
+                        <span class="likes-count">{{ answer.likes }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="question__content">
+                <div class="answer-text">{{ answer.text }}</div>
+                <div class="question__footer">
+                    <span>answered by <a href="#">{{ answer.author }} on {{ answer.created_date }}</a></span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-answers">
+            <p>No answers yet. Be the first to answer!</p>
+        </div>
+        {% endfor %}
+    </section>
+
+    {% include "public/pagination.html" %}
+
+    <section class="question-form">
+        <h3>Your Answer</h3>
+        <form action="#" method="post">
+            {% csrf_token %}
+            <label>
+                <textarea name="text" rows="6" placeholder="Enter your answer here..."></textarea>
+            </label>
+            <input type="submit" value="Post Your Answer">
+        </form>
+    </section>
+{% endblock %}
