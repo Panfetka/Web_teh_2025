@@ -71,14 +71,6 @@ body {
             object-fit: cover;
         }
 
-        .likes {
-            width: 60px;
-            padding: 0.25rem;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: white;
-        }
 
         .question__content {
             flex: 1;
@@ -230,4 +222,72 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+
+
+
+/* Стили для виджета лайков */
+.likes-widget {
+    margin-top: 10px;
+}
+
+.like-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    color: #666;
+}
+
+.like-btn:hover {
+    color: #666;
+    transform: translateY(-1px);
+
+.like-btn.active {
+    background-color: #fff0f0;
+    color: #ff6b6b;
+}
+
+.like-btn.active .like-icon {
+    animation: heartBeat 0.6s ease;
+}
+
+.like-icon {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.likes-count {
+    font-weight: 600;
+    font-size: 14px;
+    min-width: 20px;
+    text-align: center;
+}
+
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.3); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.answers-count {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.answers-icon {
+    font-size: 14px;
+}
+
 

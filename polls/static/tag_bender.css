@@ -52,13 +52,6 @@ body {
             border-radius: 8px;
         }
 
-        .likes {
-            width: 60px;
-            padding: 0.25rem;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
 
         .question__content {
             flex: 1;

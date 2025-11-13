@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 config = ConfigParser(interpolation=ExtendedInterpolation())
 config.read(os.path.join(BASE_DIR, PROJECT_NAME, 'prod.conf'))
 
-# DEBUG = config.getboolean("common", "DEBUG", fallback=False)
+
 DEBUG = config.getboolean("common", "DEBUG", fallback=True)
 SECRET_KEY = config.get("secret", "SECRET_KEY", fallback="!secret_key!")
 
@@ -51,7 +51,8 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
-    'polls'
+    'polls',
+    'accounts',
 ]
 
 MIDDLEWARE = [

@@ -16,29 +16,7 @@
 
     <section id="content" class="content">
         {% for question in page_obj %}
-        <div class="question-item" data-id="{{question.id}}">
-            <div class="question__likes-and-avatar">
-                <img src="{% static 'images/' %}{{ question.avatar }}" alt="avatar" class="avatar">
-                <input class="likes" type="number" value="{{ question.likes }}" min="0">
-            </div>
-
-            <div class="question__content">
-                <a href="{% url 'question_detail' question.id %}" class="question-title">{{ question.title }}</a>
-                <div class="description">{{ question.description }}</div>
-
-                <div class="question__footer">
-                    <a href="{% url 'question_detail' question.id %}#answers">answers ({{ question.answers_count }})</a>
-
-                    <span class="tags">
-                        Tags
-                        {% for tag in question.tags %}
-                        <a href="{% url 'tag_questions' tag %}" class="tag">{{ tag }}</a>
-                        {% endfor %}
-                    </span>
-                    <span class="author">by {{ question.author }}</span>
-                </div>
-            </div>
-        </div>
+            {% include "public/question_card.html" with question=question %}
         {% endfor %}
     </section>
 

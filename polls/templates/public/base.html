@@ -12,7 +12,9 @@
     <header>
         <span class="logo"><a href="{% url 'index' %}">AskPupkin</a></span>
         <input type="text" class="search" placeholder="Search">
-        <button class="ask-button" onclick="location.href='{% url 'ask' %}'">Ask</button>
+        <div class="button-wrapper">
+            <a href="{% url 'ask' %}" class="ask-link">Ask</a>
+        </div>
 
         <div class="profile-wrapper">
             <img src="{% static 'images/2.jpg' %}" alt="Profile" class="profile-avatar">
@@ -20,8 +22,8 @@
             <div>
                 <div class="profile-name">Dr. Piper</div>
                 <div class="button-wrapper">
-                    <a href="{% url 'settings' %}">settings</a>
-                    <a href="{% url 'login' %}">log in</a>
+                    <a href="{% url 'accounts:login' %}">log in</a>
+                    <a href="{% url 'accounts:signup' %}">sign up</a>
                 </div>
             </div>
         </div>
