@@ -1,0 +1,24 @@
+{% extends "public/base_auth.html" %}
+{% load static %}
+
+{% block title %}AskPupkin - Login{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+    <div class="auth-card">
+        <h1>Welcome back to AskPupkin</h1>
+        <form class="auth-form" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Log In</button>
+        </form>
+        <div class="auth-links">
+            <a href="{% url 'accounts:signup' %}">Create new account</a>
+            <a href="{% url 'index' %}">Back to home</a>
+        </div>
+    </div>
+{% endblock %}
