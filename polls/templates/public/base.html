@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AskPupkin{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <span class="logo"><a href="{% url 'index' %}">AskPupkin</a></span>
+        <input type="text" class="search" placeholder="Search">
+        <button class="ask-button" onclick="location.href='{% url 'accounts:ask' %}'">Ask</button>
+
+        <div class="profile-wrapper">
+            {% if current_user_profile and current_user_profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="Profile" class="profile-avatar">
+            {% else %}
+                <img src="{% static 'images/avatar1.jpg' %}" alt="Profile" class="profile-avatar">
+            {% endif %}
+
+            <div>
+        <div class="profile-name">
+            {% if user.is_authenticated %}
+                {{ user.username }}
+            {% else %}
+                Guest
+            {% endif %}
+        </div>
+                <div class="button-wrapper">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'accounts:settings' %}">settings</a>
+                        <a href="{% url 'accounts:login' %}">log out</a>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}">log in</a>
+                        <a href="{% url 'accounts:signup' %}">sign up</a>
+                    {% endif %}
+                </div>
+
+        </div>
+        </div>
+    </header>
+
+    <div class="root">
+        <main class="root__main">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <aside>
+            {% include "public/sidebar.html" %}
+        </aside>
+    </div>
+<script src="{% static 'likes.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

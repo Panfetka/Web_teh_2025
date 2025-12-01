@@ -1,0 +1,66 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Tag: {{ tag }} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header">
+        <h1>Questions tagged: {{ tag }}</h1>
+        <a href="{% url 'index' %}" class="hot-questions">New questions</a>
+        <a href="{% url 'hot_questions' %}" class="hot-questions">Hot questions</a>
+    </section>
+
+    <section id="content" class="content">
+        {% for question in page_obj %}
+        <div class="question-item" data-id="{{question.id}}">
+            <div class="question__likes-and-avatar">
+                {% if question.author.profile.avatar %}
+                    <img src="{% static 'images/' %}{{ question.avatar }}" alt="avatar" class="avatar">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.jpg' %}" alt="avatar" class="avatar">
+                {% endif %}
+                <div class="likes-widget">
+                <div class="likes-widget">
+                    <button class="like-btn" data-type="question" data-id="{{ question.id }}">
+                        <span class="like-icon">❤️</span>
+                        <span class="likes-count">{{ question.likes_count }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="question__content">
+                <a href="{% url 'question_detail' question.id %}" class="question-title">{{ question.title }}</a>
+                <div class="description">{{ question.description|truncatewords:50 }}</div>
+
+                <div class="question__footer">
+                    <a href="{% url 'question_detail' question.id %}#answers">
+                        answers ({{ question.answers_count }})</a>
+
+                    <span class="tags">
+                        Tags
+                        {% for tag in question.tags.all %}
+                        <a href="{% url 'tag_questions' tag_obj.name %}" class="tag">{{ tag_obj.name }}</a>
+                        {% empty %}
+                        <span class="no-tags">No tags</span>
+                        {% endfor %}
+                    </span>
+                    <span class="author">by {{ question.author.username }}</span>
+                </div>
+            </div>
+        </div>
+            {% empty %}
+        <div class="no-questions">
+            <p>No questions found with tag "{{ tag }}"</p>
+            <a href="{% url 'index' %}" class="btn">Browse all questions</a>
+        </div>
+        {% endfor %}
+    </section>
+
+    {% if page_obj.has_other_pages %}
+        {% include "public/pagination.html" %}
+    {% endif %}
+{% endblock %}
