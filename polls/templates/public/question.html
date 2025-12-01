@@ -15,7 +15,7 @@
                 {% if question.author.profile.avatar %}
                     <img src="{{ question.author.profile.avatar.url }}" alt="Profile" class="big-profile-avatar">
                 {% else %}
-                    <img src="{% static 'images/default-avatar.jpg' %}" alt="Profile" class="big-profile-avatar">
+                    <img src="{% static 'images/avatar1.jpg' %}" alt="Profile" class="big-profile-avatar">
                 {% endif %}
                 <div class="likes-widget">
                     <button class="like-btn" data-type="question" data-id="{{ question.id }}">
@@ -51,7 +51,7 @@
                 {% if answer.author.profile.avatar %}
                     <img src="{{ answer.author.profile.avatar.url }}" alt="avatar" class="avatar">
                 {% else %}
-                    <img src="{% static 'images/default-avatar.jpg' %}" alt="avatar" class="avatar">
+                    <img src="{% static 'images/avatar1.jpg' %}" alt="avatar" class="avatar">
                 {% endif %}
                 <div class="likes-widget">
                     <button class="like-btn" data-type="answer" data-id="{{ answer.id }}">

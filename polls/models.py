@@ -20,7 +20,8 @@ class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True, db_index=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    usage_count = models.IntegerField(default=0, db_index=True)
+    usage_count = models.IntegerField(default=0, db_index=True, help_text="Денормализованное поле. Количество использований тега. Обновляется автоматически."
+    )
 
     class Meta:
         verbose_name = "Тег"
@@ -48,12 +49,12 @@ class Question(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='questions')
-    tags = models.ManyToManyField(Tag, through='QuestionTag', related_name='questions')
+    tags = models.ManyToManyField(Tag, related_name='questions')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
-    views_count = models.IntegerField(default=0)
-    answers_count = models.IntegerField(default=0, db_index=True)
-    likes_count = models.IntegerField(default=0, db_index=True)
+    views_count = models.IntegerField(default=0, help_text="Денормализованное поле. Количество просмотров.")
+    answers_count = models.IntegerField(default=0, db_index=True, help_text="Денормализованное поле. Количество ответов. Используйте Question.answers.count() для точного подсчета.")
+    likes_count = models.IntegerField(default=0, db_index=True, help_text="Денормализованное поле. Количество лайков. Используйте Question.question_likes.count() для точного подсчета.")
     is_closed = models.BooleanField(default=False)
 
     objects = QuestionManager()
@@ -85,26 +86,13 @@ class Question(models.Model):
         return reverse('question_detail', kwargs={'question_id': self.id})
 
 
-class QuestionTag(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ['question', 'tag']
-        verbose_name = "Тег Вопроса"
-        verbose_name_plural = "Теги Вопросов"
-
-    def __str__(self):
-        return f"{self.question.title} - {self.tag.name}"
-
-
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answers')
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True, db_index=True)
-    likes_count = models.IntegerField(default=0)
+    likes_count = models.IntegerField(default=0, help_text="Денормализованное поле. Количество лайков. Используйте Answer.answer_likes.count() для точного подсчета.")
     is_correct = models.BooleanField(default=False)
     is_accepted = models.BooleanField(default=False)
 
@@ -132,18 +120,22 @@ class Answer(models.Model):
 
 
 class QuestionLike(models.Model):
+    class LikeValue(models.IntegerChoices):
+        LIKE = 1, 'Like'
+        DISLIKE = -1, 'Dislike'
+
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='question_likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='question_likes')
     value = models.SmallIntegerField(choices=[(1, 'Like'), (-1, 'Dislike')])
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ['question', 'user']
-        verbose_name = "Лайк вопроса"
-        verbose_name_plural = "Лайки вопроса"
+        constraints = [
+            models.UniqueConstraint(fields=['question', 'user'], name='unique_question_like')
+        ]
 
     def __str__(self):
-        return f"{self.user.username} {'liked' if self.value == 1 else 'disliked'} {self.question.title}"
+        return f"{self.user.username} {'liked' if self.value == 1 else 'disliked'} question {self.question.id}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -155,18 +147,22 @@ class QuestionLike(models.Model):
 
 
 class AnswerLike(models.Model):
+    class LikeValue(models.IntegerChoices):
+        LIKE = 1, 'Like'
+        DISLIKE = -1, 'Dislike'
+
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='answer_likes')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer_likes')
     value = models.SmallIntegerField(choices=[(1, 'Like'), (-1, 'Dislike')])
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ['answer', 'user']
-        verbose_name = "Лайк ответа"
-        verbose_name_plural = "Лайки ответов"
+        constraints = [
+            models.UniqueConstraint(fields=['answer', 'user'], name='unique_answer_like')
+        ]
 
     def __str__(self):
-        return f"{self.user.username} {'liked' if self.value == 1 else 'disliked'} answer to {self.answer.question.title}"
+        return f"{self.user.username} {'liked' if self.value == 1 else 'disliked'} answer {self.answer.id}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

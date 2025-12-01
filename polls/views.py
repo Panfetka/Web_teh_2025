@@ -1,10 +1,8 @@
-from django.shortcuts import render
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.views import View
-from django.views.generic import TemplateView
 from .models import Question, Answer, Tag
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Count, Prefetch
+from django.contrib.auth import get_user_model
 
 def paginate(objects_list, request, per_page=10):
     paginator = Paginator(objects_list, per_page)
@@ -19,47 +17,78 @@ def paginate(objects_list, request, per_page=10):
 
     return objects_page
 
+def get_sidebar_data():
+    popular_tags = Tag.objects.annotate(
+        question_count=Count('questions')
+    ).order_by('-question_count')[:10]
+
+    User = get_user_model()
+    best_members = User.objects.annotate(
+        question_count=Count('questions'),
+        answer_count=Count('answers')
+    ).order_by('-question_count', '-answer_count')[:5]
+
+    return {
+        'popular_tags': popular_tags,
+        'best_members': best_members,
+    }
 
 def index_view(request):
      questions = Question.objects.new_questions()
      page_obj = paginate(questions, request, 10)
-     return render(request, "public/index.html", {"page_obj": page_obj})
+     sidebar_data = get_sidebar_data()
+     context = {
+         "page_obj": page_obj,
+         **sidebar_data
+     }
+     return render(request, "public/index.html", context)
+
+def new_questions(self):
+    return self.get_queryset().select_related('author', 'author_profile').prefetch_related('tags').order_by('-likes_count', '-created_at')
+
+def hot_questions(self):
+    return self.get_queryset().select_related('author', 'author__profile') \
+            .prefetch_related('tags').order_by('-likes_count', '-created_at')
+
+def by_tag(self, tag_name):
+    return self.get_queryset().select_related('author', 'author__profile') \
+            .prefetch_related('tags').filter(tags__name=tag_name) \
+            .order_by('-created_at')
+
+def tag_questions(request, tag_name):
+    tag_obj = get_object_or_404(Tag, name=tag_name)
+
+    questions = tag_obj.questions.all().select_related('author__profile')\
+    .prefetch_related('tags').order_by('-created_at')
+    page_obj = paginate(questions, request, 10)
+    sidebar_data = get_sidebar_data()
+    return render(request, "public/tag_questions.html", {
+      "page_obj": page_obj,
+      "tag": tag_name,
+      "tag_obj": tag_obj,
+      **sidebar_data
+      })
 
 
 def question_view(request, question_id):
-    question = get_object_or_404(Question.objects.select_related('author').prefetch_related('tags'), id=question_id)
-    answers = Answer.objects.filter(question=question).select_related('author').order_by('-is_accepted', '-is_correct', '-likes_count')
+    question = get_object_or_404(Question.objects.select_related('author_profile').prefetch_related('tags').prefetch_related(
+            Prefetch(
+                'answers',
+                queryset=Answer.objects
+                    .select_related('author__profile')
+                    .order_by('-is_accepted', '-is_correct', '-likes_count')
+            )
+        ),
+        id=question_id
+    )
+
+    answers = question.answers.all()
+    answers_page = paginate(answers, request, 10)
+    sidebar_data = get_sidebar_data()
 
     return render(request, "public/question.html", {
         "question": question,
-        "answers": answers
+        "answers": answers_page,
+        "page_obj": answers_page,
+        **sidebar_data
     })
-
-
-def hot_questions(request):
-      questions = Question.objects.hot_questions()
-      page_obj = paginate(questions, request, 10)
-      return render(request, "public/hot_questions.html", {"page_obj": page_obj})
-
-
-def tag_questions(request, tag):
-      questions = Question.objects.by_tag(tag)
-      page_obj = paginate(questions, request, 10)
-      return render(request, "public/tag_questions.html", {
-      "page_obj": page_obj,
-      "tag": tag
-      })
-
-def login_view(request):
-      return render(request, "public/login.html")
-
-
-def signup_view(request):
-     return render(request, "public/register.html")
-
-
-def ask_view(request):
-     return render(request, "public/ask.html")
-
-def settings_view(request):
-    return render(request, "public/settings.html")

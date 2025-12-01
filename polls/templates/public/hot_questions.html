@@ -20,7 +20,7 @@
                 {% if question.author.profile.avatar %}
                     <img src="{{ question.author.profile.avatar.url }}" alt="avatar" class="avatar">
                 {% else %}
-                    <img src="{% static 'images/default-avatar.jpg' %}" alt="avatar" class="avatar">
+                    <img src="{% static 'images/avatar1.jpg' %}" alt="avatar" class="avatar">
                 {% endif %}
                 <div class="likes-widget">
                     <button class="like-btn" data-type="question" data-id="{{ question.id }}">

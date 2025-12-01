@@ -12,7 +12,7 @@
     <header>
         <span class="logo"><a href="{% url 'index' %}">AskPupkin</a></span>
         <input type="text" class="search" placeholder="Search">
-        <button class="ask-button" onclick="location.href='{% url 'ask' %}'">Ask</button>
+        <button class="ask-button" onclick="location.href='{% url 'accounts:ask' %}'">Ask</button>
 
         <div class="profile-wrapper">
             {% if current_user_profile and current_user_profile.avatar %}
@@ -31,11 +31,11 @@
         </div>
                 <div class="button-wrapper">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'settings' %}">settings</a>
-                        <a href="{% url 'login' %}">log in</a>
+                        <a href="{% url 'accounts:settings' %}">settings</a>
+                        <a href="{% url 'accounts:login' %}">log out</a>
                     {% else %}
-                        <a href="{% url 'login' %}">log in</a>
-                        <a href="{% url 'signup' %}">sign up</a>
+                        <a href="{% url 'accounts:login' %}">log in</a>
+                        <a href="{% url 'accounts:signup' %}">sign up</a>
                     {% endif %}
                 </div>
 

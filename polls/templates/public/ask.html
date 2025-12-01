@@ -16,18 +16,24 @@
 
         <form action="#" method="post">
             {% csrf_token %}
-            <label>
-                <span>Title</span>
-                <input type="text" name="title" placeholder="Enter your question title" required minlength="3" maxlength="200">
-            </label>
-            <label>
-                <span>Text</span>
-                <textarea name="text" rows="6" placeholder="Describe your question in detail" required minlength="20" class="resizable-textarea"></textarea>
-            </label>
-            <label>
-                <span>Tags</span>
-                <input type="text" name="tags" placeholder="Enter tags separated by commas" required pattern="[a-zA-Z0-9, ]+">
-            </label>
+
+            <div class="form-group">
+                <label for="id_title" class="form-label">Title</label>
+                <input type="text" id="id_title" name="title" placeholder="Enter your question title" required minlength="3" maxlength="200" class="form-control">
+                <small class="form-text">Be specific and imagine you're asking another person</small>
+            </div>
+
+            <div class="form-group">
+                <label for="id_text" class="form-label">Text</label>
+                <textarea id="id_text" name="text" rows="6" placeholder="Describe your question in detail" required minlength="20" class="form-control resizable-textarea"></textarea>
+                <small class="form-text">Include all the information someone would need to answer your question</small>
+            </div>
+
+            <div class="form-group">
+                <label for="id_tags" class="form-label">Tags</label>
+                <input type="text" id="id_tags" name="tags" placeholder="Enter tags separated by commas" required pattern="[a-zA-Z0-9, ]+" class="form-control">
+                <small class="form-text">Add up to 5 tags separated by commas (e.g., python, django, web)</small>
+            </div>
 
             <input type="submit" value="Ask Question">
         </form>

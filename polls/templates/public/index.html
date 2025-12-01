@@ -17,11 +17,14 @@
         {% for question in page_obj %}
         <div class="question-item" data-id="{{question.id}}">
             <div class="question__likes-and-avatar">
-                {% if question.author.profile.avatar %}
-                    <img src="{{ question.author.profile.avatar.url }}" alt="avatar" class="avatar">
-                {% else %}
-                    <img src="{% static 'images/default-avatar.jpg' %}" alt="avatar" class="avatar">
-                {% endif %}
+                {% with avatar=question.author.profile.avatar %}
+                    {% if avatar and avatar.url %}
+                        <img src="{{ avatar.url }}" alt="avatar" class="avatar"
+                             onerror="this.onerror=null; this.src='{% static 'images/avatar1.jpg' %}'">
+                    {% else %}
+                        <img src="{% static 'images/avatar1.jpg' %}" alt="avatar" class="avatar">
+                    {% endif %}
+                {% endwith %}
                 <div class="likes-widget">
                     <button class="like-btn" data-type="question" data-id="{{ question.id }}">
                         <span class="like-icon">❤️</span>

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import Profile, Tag, QuestionTag, Answer, AnswerLike, QuestionLike, Question, QuestionManager
+from .models import Profile, Tag, Answer, AnswerLike, QuestionLike, Question, QuestionManager
 
 class ProfileInline(admin.StackedInline):
     model = Profile
@@ -42,11 +42,30 @@ class TagAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at', 'usage_count']
     fields = ['name', 'description', 'usage_count', 'created_at']
 
-class QuestionTagInline(admin.TabularInline):
-    model = QuestionTag
-    extra = 1
-    verbose_name = 'Tag'
-    verbose_name_plural = 'Tags'
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author', 'created_at', 'likes_count', 'answers_count']
+    list_filter = ['tags', 'created_at', 'author']
+    search_fields = ['title', 'description', 'author__username']
+    filter_horizontal = ['tags']
+    readonly_fields = ['created_at', 'updated_at', 'likes_count', 'answers_count', 'views_count']
+
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('title', 'description', 'author')
+        }),
+        ('Теги', {
+            'fields': ('tags',)
+        }),
+        ('Статистика', {
+            'fields': ('likes_count', 'answers_count', 'views_count'),
+            'classes': ('collapse',)
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
 
 class AnswerInline(admin.TabularInline):
     model = Answer
@@ -54,31 +73,25 @@ class AnswerInline(admin.TabularInline):
     fields = ['author', 'text', 'is_correct', 'is_accepted', 'likes_count', 'created_at']
     readonly_fields = ['created_at', 'likes_count']
 
-@admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author', 'created_at', 'answers_count', 'likes_count', 'views_count', 'is_closed']
-    list_filter = ['created_at', 'is_closed', 'tags']
-    search_fields = ['title', 'description', 'author__username']
-    readonly_fields = ['created_at', 'updated_at', 'views_count', 'answers_count', 'likes_count']
-
-    #autocomplete_fields = ['author']
-    raw_id_fields = ['author']
-
-    fields = [
-        'title', 'description', 'author',
-        'views_count', 'answers_count', 'likes_count',
-        'is_closed', 'created_at', 'updated_at'
-    ]
-    inlines = [QuestionTagInline, AnswerInline]
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).select_related('author').prefetch_related('tags')
-
-@admin.register(QuestionTag)
-class QuestionTagAdmin(admin.ModelAdmin):
-    list_display = ['question', 'tag']
-    list_filter = ['tag']
-    search_fields = ['question__title', 'tag__name']
+# @admin.register(Question)
+# class QuestionAdmin(admin.ModelAdmin):
+#     list_display = ['title', 'author', 'created_at', 'answers_count', 'likes_count', 'views_count', 'is_closed']
+#     list_filter = ['created_at', 'is_closed', 'tags']
+#     search_fields = ['title', 'description', 'author__username']
+#     readonly_fields = ['created_at', 'updated_at', 'views_count', 'answers_count', 'likes_count']
+#
+#     #autocomplete_fields = ['author']
+#     raw_id_fields = ['author']
+#
+#     fields = [
+#         'title', 'description', 'author',
+#         'views_count', 'answers_count', 'likes_count',
+#         'is_closed', 'created_at', 'updated_at'
+#     ]
+#     inlines = [QuestionTagInline, AnswerInline]
+#
+#     def get_queryset(self, request):
+#         return super().get_queryset(request).select_related('author').prefetch_related('tags')
 
 
 @admin.register(QuestionLike)

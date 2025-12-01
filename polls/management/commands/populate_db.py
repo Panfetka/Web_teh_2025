@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
-from polls.models import Question, Answer, Tag, Profile, QuestionLike, QuestionTag, AnswerLike
+from polls.models import Question, Answer, Tag, Profile, QuestionLike, AnswerLike
 from faker import Faker
 import random
 from django.utils import timezone
@@ -103,7 +103,7 @@ class Command(BaseCommand):
     def update_tag_usage_counts(self, tags):
         self.stdout.write('Updating tag usage counts...')
         for tag in tags:
-            tag.usage_count = QuestionTag.objects.filter(tag=tag).count()
+            tag.usage_count = tag.questions.count()
 
         Tag.objects.bulk_update(tags, ['usage_count'], batch_size=1000)
 
