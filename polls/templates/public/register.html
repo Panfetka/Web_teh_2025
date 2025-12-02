@@ -1,0 +1,65 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Settings - AskPupkin{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'settings.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header">
+        <h1>Settings: Dr. Piper</h1>
+    </section>
+
+    <section id="content" class="content">
+        <form action="#" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if error %}
+            <div class="alert alert-error">
+                <strong>{{ error }}</strong>
+            </div>
+            {% endif %}
+
+            <label>
+                <span>Login</span>
+                <input type="text" name="login" value="dr_piper" required minlength="3" maxlength="30">
+            </label>
+
+            <label>
+                <span>Email</span>
+                <input type="email" name="email" value="{{ form_data.email }}" required>
+            </label>
+
+            <label>
+                <span>NickName</span>
+                <input type="text" name="nickname" value="Dr. Piper" required minlength="3" maxlength="50">
+            </label>
+
+            <label>
+                <span>Password</span>
+                <input type="password" name="password" value="**********" required minlength="6">
+            </label>
+
+            <label>
+                <span>Repeat password</span>
+                <input type="password" name="repeat_password" value="**********" required>
+            </label>
+
+            <div class="avatar-upload">
+                <div class="avatar-upload-header">
+                    <span>Upload avatar</span>
+                    <div class="avatar-preview">
+                        <img src="{% static 'images/4.jpg' %}" alt="Current avatar" class="current-avatar">
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="avatar" id="avatar-upload" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Register!">
+        </form>
+    </section>
+{% endblock %}

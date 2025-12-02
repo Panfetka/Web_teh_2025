@@ -1,0 +1,53 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Hot Questions - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header">
+        <h1>Hot questions</h1>
+        <a href="{% url 'index' %}" class="hot-questions">New questions</a>
+    </section>
+
+    <section id="content" class="content">
+        {% for question in page_obj %}
+        <div class="question-item" data-id="{{question.id}}">
+            <div class="question__likes-and-avatar">
+                {% if question.author.profile.avatar %}
+                    <img src="{{ question.author.profile.avatar.url }}" alt="avatar" class="avatar">
+                {% else %}
+                    <img src="{% static 'images/avatar1.jpg' %}" alt="avatar" class="avatar">
+                {% endif %}
+                <div class="likes-widget">
+                    <button class="like-btn" data-type="question" data-id="{{ question.id }}">
+                        <span class="like-icon">❤️</span>
+                        <span class="likes-count">{{ question.likes_count }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="question__content">
+                <a href="{% url 'question_detail' question.id %}" class="question-title">{{ question.title }}</a>
+                <div class="description">{{ question.description }}</div>
+
+                <div class="question__footer">
+                    <a href="{% url 'question_detail' question.id %}#answers">answers ({{ question.answers_count }})</a>
+
+                    <span class="tags">
+                        Tags
+                        {% for tag in question.tags.all %}
+                        <a href="{% url 'tag_questions' tag %}" class="tag">{{ tag }}</a>
+                        {% endfor %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+
+    {% include "public/pagination.html" %}
+{% endblock %}
