@@ -1,0 +1,97 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Settings - AskPupkin{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'settings.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header">
+        <h1>Create New Account</h1>
+    </section>
+
+    <section id="content" class="content">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        <strong>{{ message }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.errors %}
+                <div class="alert alert-error">
+                    <strong>Please correct the errors below:</strong>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div>{{ field.label }}: {{ error }}</div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <label>
+                <span>Username</span>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="field-error">{{ form.username.errors }}</div>
+                {% endif %}
+            </label>
+
+            <label>
+                <span>Email</span>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="field-error">{{ form.email.errors }}</div>
+                {% endif %}
+            </label>
+
+            <label>
+                <span>Password</span>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="field-error">{{ form.password1.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">
+                    • At least 8 characters<br>
+                    • Not too common<br>
+                    • Not entirely numeric
+                </small>
+            </label>
+
+            <label>
+                <span>Confirm Password</span>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="field-error">{{ form.password2.errors }}</div>
+                {% endif %}
+            </label>
+
+            <div class="avatar-upload">
+                <div class="avatar-upload-header">
+                    <span>Upload avatar</span>
+                    <div class="avatar-preview">
+                        <img src="{% static 'images/4.jpg' %}" alt="Current avatar" class="current-avatar">
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="avatar" id="avatar-upload" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Register!" class="btn btn-primary">
+
+            <div class="mt-3">
+                <p>Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
+            </div>
+        </form>
+    </section>
+{% endblock %}
