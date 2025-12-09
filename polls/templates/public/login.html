@@ -10,9 +10,10 @@
 {% block auth_content %}
     <div class="auth-card">
         <h1>Welcome back to AskPupkin</h1>
-        <form class="auth-form">
-            <input type="text" placeholder="Username" required>
-            <input type="password" placeholder="Password" required>
+        <form class="auth-form" method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Log In</button>
         </form>
         <div class="auth-links">

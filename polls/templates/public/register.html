@@ -9,42 +9,70 @@
 
 {% block content %}
     <section class="root__header">
-        <h1>Settings: Dr. Piper</h1>
+        <h1>Create New Account</h1>
     </section>
 
     <section id="content" class="content">
-        <form action="#" method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            {% if error %}
-            <div class="alert alert-error">
-                <strong>{{ error }}</strong>
-            </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        <strong>{{ message }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.errors %}
+                <div class="alert alert-error">
+                    <strong>Please correct the errors below:</strong>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div>{{ field.label }}: {{ error }}</div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
             {% endif %}
 
             <label>
-                <span>Login</span>
-                <input type="text" name="login" value="dr_piper" required minlength="3" maxlength="30">
+                <span>Username</span>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="field-error">{{ form.username.errors }}</div>
+                {% endif %}
             </label>
 
             <label>
                 <span>Email</span>
-                <input type="email" name="email" value="{{ form_data.email }}" required>
-            </label>
-
-            <label>
-                <span>NickName</span>
-                <input type="text" name="nickname" value="Dr. Piper" required minlength="3" maxlength="50">
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="field-error">{{ form.email.errors }}</div>
+                {% endif %}
             </label>
 
             <label>
                 <span>Password</span>
-                <input type="password" name="password" value="**********" required minlength="6">
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="field-error">{{ form.password1.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">
+                    • At least 8 characters<br>
+                    • Not too common<br>
+                    • Not entirely numeric
+                </small>
             </label>
 
             <label>
-                <span>Repeat password</span>
-                <input type="password" name="repeat_password" value="**********" required>
+                <span>Confirm Password</span>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="field-error">{{ form.password2.errors }}</div>
+                {% endif %}
             </label>
 
             <div class="avatar-upload">
@@ -59,7 +87,11 @@
                 </div>
             </div>
 
-            <input type="submit" value="Register!">
+            <input type="submit" value="Register!" class="btn btn-primary">
+
+            <div class="mt-3">
+                <p>Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
+            </div>
         </form>
     </section>
 {% endblock %}

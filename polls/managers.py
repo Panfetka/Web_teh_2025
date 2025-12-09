@@ -3,16 +3,16 @@ from django.db.models import Count
 class QuestionManager(models.Manager):
     def new_questions(self):
         # return self.order_by('-created_at')
-        return self.get_queryset().select_related('author').prefetch_related('tags') \
+        return self.get_queryset().select_related('author', 'author__profile').prefetch_related('tags') \
             .order_by('-created_at')
 
     def hot_questions(self):
         # return self.order_by('-likes_count', '-created_at')
-        return self.get_queryset().select_related('author').prefetch_related('tags') \
+        return self.get_queryset().select_related('author', 'author__profile').prefetch_related('tags') \
             .order_by('-likes_count', '-created_at')
 
     def by_tag(self, tag_name):
-        return self.get_queryset().select_related('author').prefetch_related('tags') \
+        return self.get_queryset().select_related('author', 'author__profile').prefetch_related('tags') \
             .filter(tags__name=tag_name) \
             .order_by('-created_at')
 

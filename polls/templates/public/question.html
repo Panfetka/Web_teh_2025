@@ -46,7 +46,7 @@
         <h2>{{ answers.count }} Answers</h2>
 
         {% for answer in answers %}
-        <div class="answer-item">
+        <div id="answer-{{ answer.id }}" class="answer-item">
             <div class="question__likes-and-avatar">
                 {% if answer.author.profile.avatar %}
                     <img src="{{ answer.author.profile.avatar.url }}" alt="avatar" class="avatar">
@@ -82,7 +82,14 @@
 
     <section class="question-form">
         <h3>Your Answer</h3>
-        <form action="#" method="post">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form action="{% url 'add_answer' question.id %}" method="post">
             {% csrf_token %}
             <label>
                 <textarea name="text" rows="6" placeholder="Enter your answer here..."></textarea>
