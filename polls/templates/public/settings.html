@@ -1,0 +1,100 @@
+{% extends "public/base_auth.html" %}
+{% load static %}
+
+{% block title %}Settings - AskPupkin{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'settings.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+    <section class="root__header">
+        <h1>Settings</h1>
+    </section>
+
+    <section id="content" class="content">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.errors %}
+                <div class="alert alert-error">
+                    <strong>Please fix errors:</strong>
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <label>
+                <span>Username</span>
+                <input type="text" value="{{ user.username }}" readonly>
+                <small class="form-text text-muted">Username cannot be changed</small>
+            </label>
+
+            <label>
+                <span>Email</span>
+                <input type="email" name="email" value="{{ form.email.value|default:user.email }}" required>
+                {% if form.email.errors %}
+                    <div class="field-error">{{ form.email.errors }}</div>
+                {% endif %}
+            </label>
+
+            <label>
+                <span>Bio</span>
+                <textarea name="bio" rows="4">{{ form.bio.value|default:user.profile.bio }}</textarea>
+                {% if form.bio.errors %}
+                    <div class="field-error">{{ form.bio.errors }}</div>
+                {% endif %}
+            </label>
+
+            <div class="avatar-upload">
+                <div class="avatar-upload-header">
+                    <span>Avatar</span>
+                    <div class="avatar-preview">
+                        {% if user.profile.avatar %}
+                            <img src="{{ user.profile.avatar.url }}" alt="Current avatar" class="current-avatar" id="avatar-preview">
+                        {% else %}
+                            <img src="{% static 'images/default-avatar.jpg' %}" alt="Default avatar" class="current-avatar" id="avatar-preview">
+                        {% endif %}
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="avatar" id="avatar-upload" accept="image/*" onchange="previewAvatar(event)">
+                        {% if form.avatar.errors %}
+                            <div class="field-error">{{ form.avatar.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Save">
+        </form>
+    </section>
+
+    <script>
+        function previewAvatar(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('avatar-preview');
+                output.src = reader.result;
+            };
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+    </script>
+{% endblock %}

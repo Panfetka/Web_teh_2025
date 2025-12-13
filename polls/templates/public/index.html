@@ -1,0 +1,59 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}AskPupkin - Home{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="root__header">
+        <h1>New questions</h1>
+        <a href="{% url 'hot_questions' %}" class="hot-questions">Hot questions</a>
+    </section>
+
+    <section id="content" class="content">
+        {% for question in page_obj %}
+        <div class="question-item" data-id="{{question.id}}">
+            <div class="question__likes-and-avatar">
+                {% with avatar=question.author.profile.avatar %}
+                    {% if avatar and avatar.url %}
+                        <img src="{{ avatar.url }}" alt="avatar" class="avatar"
+                             onerror="this.onerror=null; this.src='{% static 'images/avatar1.jpg' %}'">
+                    {% else %}
+                        <img src="{% static 'images/avatar1.jpg' %}" alt="avatar" class="avatar">
+                    {% endif %}
+                {% endwith %}
+                <div class="likes-widget">
+                    <button class="like-btn" data-type="question" data-id="{{ question.id }}">
+                        <span class="like-icon">❤️</span>
+                        <span class="likes-count">{{ question.likes_count }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="question__content">
+                <a href="{% url 'question_detail' question.id %}" class="question-title">{{ question.title }}</a>
+                <div class="description">{{ question.description }}</div>
+
+                <div class="question__footer">
+                    <a href="{% url 'question_detail' question.id %}#answers">answers ({{ question.answers_count }})</a>
+
+                    <span class="tags">
+                        Tags
+                        {% for tag in question.tags.all|slice:":2" %}
+                        <a href="{% url 'tag_questions' tag %}" class="tag">{{ tag }}</a>
+                        {% endfor %}
+                        {% if question.tags.count > 2 %}
+                            <span class="tags-ellipsis">...</span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+
+    {% include "public/pagination.html" %}
+{% endblock %}

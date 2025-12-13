@@ -1,0 +1,28 @@
+{% load static %}
+
+<section id="popular_tags">
+    <h3>Popular Tags</h3>
+    <div class="popular-tags__links">
+        {% for tag in popular_tags %}
+        <a href="{% url 'tag_questions' tag.name %}"
+           class="tag-{{ tag.name|slugify }}">
+            {{ tag.name }}
+        </a>
+        {% empty %}
+        <span class="no-tags">No tags yet</span>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="best_members">
+    <h3>Best Members</h3>
+    <ul class="best-members__links">
+        {% for member in best_members %}
+        <li>
+            <a href="#">{{ member.username }}</a>
+        </li>
+        {% empty %}
+        <li><span class="no-members">No members yet</span></li>
+        {% endfor %}
+    </ul>
+</section>
