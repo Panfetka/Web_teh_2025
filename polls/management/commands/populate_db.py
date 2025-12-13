@@ -90,11 +90,8 @@ class Command(BaseCommand):
         self.stdout.write('Adding tags to questions...')
         for question in created_questions:
             question_tags = random.sample(tags, random.randint(1, 5))
-            for tag in question_tags:
-                question_tag = QuestionTag(question=question, tag=tag)
-                question_tags_to_create.append(question_tag)
+            question.tags.set(question_tags)
 
-        QuestionTag.objects.bulk_create(question_tags_to_create, batch_size=1000)
         self.update_tag_usage_counts(tags)
 
         self.stdout.write(f'Created {count} questions')

@@ -61,7 +61,6 @@ def index_view(request):
 #             .order_by('-created_at')
 
 def hot_questions_view(request):
-    """Страница горячих вопросов"""
     questions = Question.objects.hot_questions()
     page_obj = paginate(questions, request, 10)
     sidebar_data = get_sidebar_data()
